@@ -121,7 +121,7 @@ Maria, who was detained in Nauru, has been told she is ineligible to apply for p
       function assemblePoem(articleWords) {
         let lineText = "";
         for (const [counter, word] of articleWords.entries()) {
-          if ((counter + 1) % 5 == 0) {
+          if ((counter + 1) % 10 == 0) {
             addLine(lineText);
             lineText = "";
           } else {

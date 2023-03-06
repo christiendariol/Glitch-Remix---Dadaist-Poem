@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>To Make a Dadaist Poem</title>
+
+    <meta
+      name="description"
+      content="An example of Tristan Tzara's To Make a Dadaist Poem."
+    />
+    <!-- styles -->
+    <style>
+      #poem {
+        padding: 10px;
+        border: 3px solid #000;
+      }
+      .controls {
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>To Make a Dadaist Poem</h1>
+    <ol>
+      <li>Take a newspaper.</li>
+      <li>Take a pair of scissors.</li>
+      <li>Choose an article as long as you are planning to make your poem.</li>
+      <li>Cut out the article.</li>
+      <li>
+        Then cut out each of the words that make up this article and put them in
+        a bag.
+      </li>
+      <li>Shake it gently.</li>
+      <li>
+        Then take out the scraps one after the other in the order in which they
+        left the bag.
+      </li>
+      <li>Copy conscientiously.</li>
+      <li>The poem will be like you.</li>
+      <li>
+        And here are you a writer, infinitely original and endowed with a
+        sensibility that is charming though beyond the understanding of the
+        vulgar.
+      </li>
+    </ol>
+    <cite>Tristan Tzara</cite>
+
+    <div class="controls">
+      <button id="new-poem">New poem</button>
+    </div>
+    <div id="poem"></div>
+    <!-- script -->
+    <script>
+      const article = ` A twist of fate has left asylum seekers who have travelled to Australia on the same boat facing utterly different futures.
+
+Key points:
+
+Hundreds have rallied outside Parliament House against what they say is an inconsistent approach to refugee visas
+The federal government recently announced 19,000 temporary visa holders would be eligible to apply for permanent visas
+The government says anyone who arrives illegally by boat will have no chance of permanent settlement
+It is a familiar story for those on bridging visas. The passenger sitting next to them on a crowded boat bound for Australia now has a pathway to permanent residency while they have to apply for a new visa every six months.
+
+Hundreds of asylum seekers rallied on the lawns out the front of Parliament House on Monday, calling out what they see as an inconsistent approach that prolongs uncertainty.
+
+The group travelled from around Australia on the back of the federal government's announcement last month that 19,000 Temporary Protection (TPV) and Safe Haven Enterprise (SHEV) visa holders would be eligible to apply for permanent visas.
+
+At the time of announcing the pathway, Immigration Minister Andrew Giles said thousands of TPV and SHEV holders had "endured 10 years of uncertainty" due to the policies of the previous government.
+
+Speaking at the rally, asylum seeker Ali said the announcement continued that uncertainty for the remaining cohort of some 12,000 other applicants both onshore and offshore.
+
+Ali stands with protesters at a rally at parliament house 
+Ali says many other asylum seekers on the boat he was on have been granted permanent residency but he has not.(ABC News)
+"We have been waiting, waiting, waiting … there is no future," Ali said.
+
+He said a number of passengers on his boat had been granted permanent residency but he had not.
+
+"I came with 133 people," he said. "Most of them are refugees. All my friends have permanent visas now.
+
+"Out of 133 people, only four people transferred to Nauru where we suffered for five years. 
+
+"We came here now and [there is] still no solution."
+
+Maria Kahie, a Somali asylum seeker, travelled from Queensland in the hope of certainty after nine years of "limbo".
+
+Maria at a rally at parliament house
+Asylum seeker Maria Kahie says the system is "built for us to fail".(ABC News)
+Maria, who was detained in Nauru, has been told she is ineligible to apply for permanent residency despite others on her boat, who were brought to Australia, being eligible.
+
+"This system is not built for us to succeed," Ms Kahie said.
+
+"It's built for us to fail.
+
+"Some of my friends are getting the protection now, which is great and I don't want to take anything away from them, but the point is what about us?
+
+"I have two Australian kids, my Australian husband here, I have a cleaning business. Going to a third country is not an option for me.
+
+"If we had the option to stay in our own country we wouldn't have come here but my dad was killed in Somali.
+
+"And my mum is there, my brother is there. If I could go back there I would love to but I can't  ”.`;
+      const button = document.getElementById("new-poem");
+      function shuffleWords(list) {
+        return list
+          .map((value) => ({ value, sort: Math.random() }))
+          .sort((a, b) => a.sort - b.sort)
+          .map(({ value }) => value);
+      }
+      function clearText() {
+        const poem = document.getElementById("poem");
+        poem.innerHTML = "";
+      }
+      function addLine(line) {
+        const poem = document.getElementById("poem");
+        const poemLine = document.createElement("div");
+        const lineText = document.createTextNode(line);
+        poemLine.appendChild(lineText);
+        poem.appendChild(poemLine);
+      }
+      function assemblePoem(articleWords) {
+        let lineText = "";
+        for (const [counter, word] of articleWords.entries()) {
+          if ((counter + 1) % 10 == 0) {
+            addLine(lineText);
+            lineText = "";
+          } else {
+            if (lineText === "") {
+              lineText = word;
+            } else {
+              lineText = lineText + " " + word;
+            }
+          }
+        }
+        if (lineText !== "") {
+          addLine(lineText);
+        }
+      }
+      function newPoem() {
+        const cutUpArticle = article.split(" ");
+        const shuffledWords = shuffleWords(cutUpArticle);
+        clearText();
+        assemblePoem(shuffledWords);
+      }
+      newPoem();
+      button.addEventListener("click", newPoem);
+    </script>
+    <!-- include the Glitch button to show what the webpage is about and
+          to make it easier for folks to view source and remix -->
+    <div
+      class="glitchButton"
+      style="position: fixed; top: 20px; right: 20px"
+    ></div>
+    <script src="https://button.glitch.me/button.js" defer></script>
+  </body>
+</html>
